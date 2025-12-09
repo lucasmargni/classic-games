@@ -12,7 +12,7 @@ const SnakeBoard = ({ rows, cols } : MatrixSize) => {
         let interval : number | undefined;
 
         if(isGameOn) {
-            interval = setInterval(() =>{
+            interval = setInterval(() => {
                 let snakeAlive : boolean = !game.move();
 
                 if(snakeAlive) {
@@ -21,7 +21,7 @@ const SnakeBoard = ({ rows, cols } : MatrixSize) => {
                     setIsGameOn(false);
                 }
                 
-            }, 800);
+            }, 500);
         }
 
         return () => clearInterval(interval);
@@ -84,11 +84,12 @@ const SnakeBoard = ({ rows, cols } : MatrixSize) => {
         <main>
             <h1>Snake!!!</h1>
 
-            <div className={`bg-blue-200 rounded-2xl p-8 grid grid-cols-${rows} gap-2`}>
+            <div className={ `bg-blue-200 rounded-2xl p-8 grid gap-2` } 
+                style={{ gridTemplateColumns: `repeat(${rows}, minmax(0, 1fr))` }}>
                 {Array.from({ length: rows }).map((_, rowIndex) => {
                     return Array.from({ length: cols }).map((_, colIndex) => {
                         return (
-                            <div className={`h-12 w-12 bg-green-500 grid items-center justify-center`}>
+                            <div className={ `h-12 w-12 bg-green-500 grid items-center justify-center` }>
                                 <div className={createClasses(rowIndex, colIndex)}/>
                             </div>
                         );
