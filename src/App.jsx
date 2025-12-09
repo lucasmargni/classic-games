@@ -7,8 +7,8 @@ const App = () => {
   return (
     <Router>
         <Routes>
-            <Route path="/" element={<HomePage/>}/>
-            <Route path="/snake" element={<SnakeBoard row={10} col={10} />}/>
+            <Route path='/' element={<HomePage/>}/>
+            <Route path='/snake' element={<SnakeBoard row={10} col={10}/>}/>
         </Routes>
     </Router>
   );

@@ -1,9 +1,9 @@
-import { useState, useEffect, SetStateAction } from "react";
-import { SnakeGame, boardStates } from "../utils/SnakeGame";
-import type { MatrixIndex } from "../types/snake-types"
+import { useState, useEffect, SetStateAction } from 'react';
+import { SnakeGame, boardStates } from '../../utils/snake/SnakeGame';
+import type { MatrixSize } from '../../types/snake-types';
 
-const SnakeBoard = ({ row, col } : MatrixIndex) => {
-    const [game, _] = useState(() => new SnakeGame(row, col));
+const SnakeBoard = ({ rows, cols } : MatrixSize) => {
+    const [game, _] = useState(() => new SnakeGame(rows, cols));
     const [isGameOn, setIsGameOn] = useState(false);
     const [points, setPoints] = useState(0);
     const [pressedKey, setPressedKey] = useState('');
@@ -84,9 +84,9 @@ const SnakeBoard = ({ row, col } : MatrixIndex) => {
         <main>
             <h1>Snake!!!</h1>
 
-            <div className={`bg-blue-200 rounded-2xl p-8 grid grid-cols-${row} gap-2`}>
-                {Array.from({ length: row }).map((_, rowIndex) => {
-                    return Array.from({ length: col }).map((_, colIndex) => {
+            <div className={`bg-blue-200 rounded-2xl p-8 grid grid-cols-${rows} gap-2`}>
+                {Array.from({ length: rows }).map((_, rowIndex) => {
+                    return Array.from({ length: cols }).map((_, colIndex) => {
                         return (
                             <div className={`h-12 w-12 bg-green-500 grid items-center justify-center`}>
                                 <div className={createClasses(rowIndex, colIndex)}/>

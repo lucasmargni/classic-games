@@ -1,4 +1,4 @@
-import type { MatrixIndex, enumBoard } from "../types/snake-types.ts";
+import type { MatrixIndex, enumBoard } from '../../types/snake-types';
 
 export const boardStates : enumBoard = {
     NONE : 0,
