@@ -1,12 +1,15 @@
-import { useState, useEffect, SetStateAction } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { SnakeGame, boardStates } from '../../utils/snake/SnakeGame';
 import type { MatrixSize } from '../../types/snake-types';
 
 const SnakeBoard = ({ rows, cols } : MatrixSize) => {
-    const [game, _] = useState(() => new SnakeGame(rows, cols));
+    const [game, setGame] = useState(() => new SnakeGame(rows, cols));
     const [isGameOn, setIsGameOn] = useState(false);
+    const [isGameOver, setIsGameOver] = useState(false);
     const [points, setPoints] = useState(0);
     const [pressedKey, setPressedKey] = useState('');
+
+    const directionChanged = useRef(false);
 
     useEffect(() => {
         let interval : number | undefined;
@@ -15,51 +18,57 @@ const SnakeBoard = ({ rows, cols } : MatrixSize) => {
             interval = setInterval(() => {
                 let snakeAlive : boolean = !game.move();
 
+                directionChanged.current = false;
+
                 if(snakeAlive) {
                     setPoints((prev) => prev+10);
                 } else {
                     setIsGameOn(false);
+                    setIsGameOver(true);
                 }
                 
-            }, 500);
+            }, 300);
         }
 
         return () => clearInterval(interval);
-    }, [isGameOn, points]);
+    }, [isGameOn, points, game]);
 
     useEffect(() => {
         const handleKeyDown = (event : KeyboardEvent) => {
             setPressedKey(event.key);
 
-            //if(isGameOn) {
+            if(isGameOn && !directionChanged.current) {
+                let dir : string = '';
+
                 switch (event.key) {
                     case 'ArrowUp':
                     case 'w':
-                        game.changeDirection('UP');
-                        console.log(event.key);
+                        dir = 'UP';
                         break;
                     case 'ArrowDown':
                     case 's':
-                        game.changeDirection('DOWN');
+                        dir = 'DOWN';
                         break;
                     case 'ArrowRight':
                     case 'd':
-                        game.changeDirection('RIGHT');
+                        dir = 'RIGHT';
                         break;
                     case 'ArrowLeft':
                     case 'a':
-                        game.changeDirection('LEFT');
+                        dir ='LEFT';
                         break;
                     default:
                         break;
                 }
-            //}
+
+                directionChanged.current = game.changeDirection(dir);
+            }
         };
 
         document.addEventListener('keydown', handleKeyDown);
 
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [game, isGameOn]);
 
     const createClasses = (row : number, col : number) : string => {
         let classes : string = '';
@@ -80,6 +89,21 @@ const SnakeBoard = ({ rows, cols } : MatrixSize) => {
         return classes;
     };
 
+    const buttonAction = () => {
+        if(isGameOver) {
+            // restart the game
+            setGame(() => new SnakeGame(rows, cols));
+            setPoints(0);
+            setIsGameOver(false);
+        } else if(isGameOn) {
+            // pause the game
+            setIsGameOn(false);
+        } else {
+            // resume the game
+            setIsGameOn(true);
+        }
+    };
+
     return (
         <main>
             <h1>Snake!!!</h1>
@@ -97,7 +121,7 @@ const SnakeBoard = ({ rows, cols } : MatrixSize) => {
                 })}
             </div>
 
-            <button onClick={() => setIsGameOn((prev) => !prev)}>{isGameOn ? 'Pause' : 'Start'}</button>
+            <button onClick={buttonAction}>{isGameOn ? 'Pause' : 'Start'}</button>
             <div>Points: {points}</div>
         </main>
     );

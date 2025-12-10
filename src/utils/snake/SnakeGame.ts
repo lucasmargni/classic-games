@@ -58,17 +58,23 @@ export class SnakeGame {
         return { row : appleRow, col : appleCol };
     }
 
-    changeDirection(dir : string) : void {
+    changeDirection(dir : string) : boolean {
+        let changed : boolean = false;
+
         // The snake only can go to an perpendicular direction
         if(this.direction === 'UP' || this.direction === 'DOWN') {
             if(dir === 'RIGHT' || dir === 'LEFT') {
                 this.direction = dir;
+                changed = true;
             }
         } else { // this.direction === 'RIGHT' || this.direction === 'LEFT'
             if(dir === 'UP' || dir === 'DOWN') {
                 this.direction = dir;
+                changed = true;
             }
         }
+
+        return changed;
     }
 
     move() : boolean {
