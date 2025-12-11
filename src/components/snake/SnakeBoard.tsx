@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { SnakeGame, boardStates } from '../../utils/snake/SnakeGame';
-import type { MatrixSize } from '../../types/snake-types';
+import type { MatrixSize } from '../../types/board-types';
 
 const SnakeBoard = ({ rows, cols } : MatrixSize) => {
     const [game, setGame] = useState(() => new SnakeGame(rows, cols));
