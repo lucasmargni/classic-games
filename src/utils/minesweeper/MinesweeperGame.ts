@@ -53,7 +53,7 @@ export class MinesweeperGame {
     }
 
     peekPosition(row : number, col : number) : number {
-        let result : number = 0;
+        let result : number = -2;
 
         if(row >= 0 && row < this.rows && col >= 0 && col < this.cols) {
             // position on the board
@@ -65,8 +65,10 @@ export class MinesweeperGame {
                 result = this.countMinesAround(row, col);
 
                 this.board[row][col] = result;
+            } else {
+                // it was already peeked
+                result = this.board[row][col];
             }
-            // if neither options, it was already peeked
         }
 
         return result;
