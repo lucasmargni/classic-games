@@ -3,11 +3,11 @@ import { SnakeGame, boardStates } from '../../utils/snake/SnakeGame';
 import type { MatrixSize } from '../../types/board-types';
 
 const SnakeBoard = ({ rows, cols } : MatrixSize) => {
-    const [game, setGame] = useState(() => new SnakeGame(rows, cols));
-    const [isGameOn, setIsGameOn] = useState(false);
-    const [isGameOver, setIsGameOver] = useState(false);
-    const [points, setPoints] = useState(0);
-    const [pressedKey, setPressedKey] = useState('');
+    const [game, setGame] = useState<SnakeGame>(() => new SnakeGame(rows, cols));
+    const [isGameOn, setIsGameOn] = useState<boolean>(false);
+    const [isGameOver, setIsGameOver] = useState<boolean>(false);
+    const [points, setPoints] = useState<number>(0);
+    const [pressedKey, setPressedKey] = useState<string>('');
 
     const directionChanged = useRef(false);
 
