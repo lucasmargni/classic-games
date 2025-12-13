@@ -106,8 +106,8 @@ export class MinesweeperGame {
     }
 }
 
-const a = new MinesweeperGame(2, 5, {row : 1, col : 1});
+/*const a = new MinesweeperGame(2, 5, {row : 1, col : 1});
 a.printBoard();
 console.log(a.peekPosition(0, 0));
 console.log(a.peekPosition(0, 1));
-a.printBoard();
+a.printBoard();*/

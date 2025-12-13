@@ -117,7 +117,8 @@ const SnakeBoard = ({ rows, cols } : MatrixSize) => {
                 {Array.from({ length: rows }).map((_, rowIndex) => {
                     return Array.from({ length: cols }).map((_, colIndex) => {
                         return (
-                            <div className='h-12 w-12 bg-green-500 grid items-center justify-center'>
+                            <div key={`${rowIndex}-${colIndex}`}
+                                className='h-12 w-12 bg-green-500 grid items-center justify-center'>
                                 <div className={createClasses(rowIndex, colIndex)}/>
                             </div>
                         );
